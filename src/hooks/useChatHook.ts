@@ -41,12 +41,12 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
   );
 
   const socket = usePartySocket({
-    host: 'http://localhost:8787',
+    host: import.meta.env.PROD
+      ? 'https://ticketdesk.ai'
+      : 'http://localhost:8787',
     party: 'chatroom',
     room: chatbotId,
     onOpen() {
-      console.log('Connected to chat server');
-
       // Get existing session data from localStorage
       const existingSessionId = getLocalStorage(`ti_${chatbotId}_session_id`);
       const existingClientId = getLocalStorage(`ti_${chatbotId}_client_id`);
@@ -62,7 +62,6 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
     },
     onMessage(e) {
       const { type, data } = JSON.parse(e.data);
-      console.log('Received data:', { type, data });
 
       if (type === 'session:joined') {
         // Server sends back session details
@@ -101,11 +100,9 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
         console.log('Unhandled message type:', type, data);
       }
     },
-    onClose() {
-      console.log('Disconnected from chat server');
-    },
+    onClose() {},
     onError(error) {
-      console.error('Socket error:', error);
+      console.error(error);
     },
   });
 

@@ -35,8 +35,6 @@ export function ChatWidget({ chatbotId }: { chatbotId: string }) {
     chatbotId,
   });
 
-  console.log(`widget loading: ${isLoading}`, config);
-
   if (isLoading === true || !config) {
     return null;
   }

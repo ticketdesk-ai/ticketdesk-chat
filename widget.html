@@ -4,14 +4,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Ticketdesk Chatbot</title>
+    <title>Ticketdesk Chatbot Demo</title>
+    <!-- Tailwind CSS v4 CDN: Preview page only, CSS not required on your website -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   </head>
-  <body>
-    <div class="container">
-      <h1>Chatbox will appear on bottom right</h1>
+  <body class="bg-gray-100 p-8">
+    <div class="max-w-3xl mx-auto space-y-6">
+      <h1 class="text-3xl font-bold text-center text-gray-800">
+        Ticketdesk Chatbot Test Page
+      </h1>
+      <p class="text-center text-gray-600">
+        The chatbot will appear at the bottom-right corner of this page.
+      </p>
+
+      <div class="space-y-4">
+        <h2 class="text-xl font-semibold text-gray-700">Setup Instructions:</h2>
+        <ol
+          class="list-decimal list-inside bg-white border border-gray-200 rounded-xl p-6 space-y-2 shadow-sm"
+        >
+          <li>
+            Login to your
+            <a
+              class="font-medium"
+              href="https://app.ticketdesk.ai/settings/chatbots"
+              target="_blank"
+              >Ticketdesk AI</a
+            >
+            account.
+          </li>
+          <li>Create a chatbot from the dashboard.</li>
+          <li>
+            Copy the <span class="font-medium">Chatbot ID</span> (looks like
+            <code class="bg-gray-200 px-1 py-0.5 rounded"
+              >cb_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code
+            >).
+          </li>
+          <li>Paste it into the script below, replacing the sample ID:</li>
+        </ol>
+
+        <pre
+          class="bg-gray-900 text-green-300 p-4 rounded-lg overflow-x-auto text-sm"
+        >
+&lt;script&gt;
+  window.TICKETDESK_CHATBOT_ID = 'cb_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+&lt;/script&gt;
+&lt;script src="./dist/ticketdesk-chatbot.umd.cjs"&gt;&lt;/script&gt;
+        </pre>
+      </div>
     </div>
+
+    <!-- Replace with your chatbot ID -->
     <script>
-      window.TICKETDESK_CHATBOT_ID = 'cb_260c0ee4-387d-47fe-b345-3dff86aed49b';
+      window.TICKETDESK_CHATBOT_ID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
     </script>
     <script src="./dist/ticketdesk-chatbot.umd.cjs"></script>
   </body>
