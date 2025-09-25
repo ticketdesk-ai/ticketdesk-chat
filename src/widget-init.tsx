@@ -9,6 +9,7 @@ function initChatbot(chatbotId: string) {
   if (!container) {
     container = document.createElement('div');
     container.id = 'ticketdesk-ai';
+    container.setAttribute('style', 'color-scheme: light;');
     document.body.appendChild(container);
   }
 

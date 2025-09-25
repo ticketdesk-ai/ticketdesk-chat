@@ -3,13 +3,14 @@ export interface ChatBotConfig {
   shape?: 'square' | 'round';
   icon?: string;
   welcome_message?: string;
+  fields?: string[]
 }
 
 export interface Message {
   id?: string;
   from: 'operator' | 'user' | 'agent';
   content: string;
-  type: 'text' | 'image' | 'file' | 'form';
+  type: 'text' | 'image' | 'file' | 'form' | 'audio';
   timestamp: number;
   status?: 'sent' | 'read' | 'failed';
   file?: {

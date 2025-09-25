@@ -17,12 +17,12 @@ export function AudioRecorder({ onAudioRecorded, config }: AudioRecorderProps) {
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const timerRef = useRef<number | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
   useEffect(() => {
-    return () => {  
+    return () => {
       // Cleanup on unmount
       if (timerRef.current) {
         clearInterval(timerRef.current);
@@ -154,8 +154,8 @@ export function AudioRecorder({ onAudioRecorded, config }: AudioRecorderProps) {
 
   const sendAudio = () => {
     if (audioBlob) {
-      const audioFile = new File([audioBlob], `audio-${Date.now()}.webm`, {
-        type: 'audio/webm;codecs=opus',
+      const audioFile = new File([audioBlob], `recording.wav`, {
+        type: 'audio/wav',
       });
 
       onAudioRecorded(audioFile);

@@ -19,7 +19,6 @@ export function ChatWidget({ chatbotId }: { chatbotId: string }) {
   const {
     messages,
     sendMessage,
-    sendFile,
     retryMessage,
     startNewChat,
     endCurrentChat,
@@ -50,6 +49,7 @@ export function ChatWidget({ chatbotId }: { chatbotId: string }) {
       />
 
       <ChatWindow
+        chatbotId={chatbotId}
         isOpen={isOpen}
         isMaximized={isMaximized}
         isConnected={isConnected}
@@ -65,7 +65,6 @@ export function ChatWidget({ chatbotId }: { chatbotId: string }) {
         onClose={() => setIsOpen(false)}
         onToggleMaximize={() => setIsMaximized(!isMaximized)}
         onSendMessage={sendMessage}
-        onFileUpload={sendFile}
         onRetryMessage={retryMessage}
       />
     </shadow.div>

@@ -42,7 +42,7 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
 
   const socket = usePartySocket({
     host: import.meta.env.PROD
-      ? 'https://ticketdesk.ai'
+      ? 'https://api.ticketdesk.ai'
       : 'http://localhost:8787',
     party: 'chatroom',
     room: chatbotId,
@@ -133,27 +133,19 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
   }, [chatbotId, config?.welcome_message]);
 
   const sendMessage = useCallback(
-    (content: string) => {
+    (newMessage: Message) => {
       if (!sessionId || !clientId) {
         console.log('No session details yet, cannot send message');
         return;
       }
-
-      const userMessage: Message = {
-        id: generateId(),
-        from: 'user',
-        content,
-        type: 'text',
-        timestamp: Date.now(),
-        status: socket ? 'sent' : 'failed',
-      };
-
+      newMessage.id = generateId();
       setMessages((prev) => {
-        const nextMessages = [...prev, userMessage];
+        const nextMessages = [...prev, newMessage];
 
         // Show dynamic form after first user message
         if (
           selectedSession &&
+          config.fields?.length &&
           !selectedSession.email &&
           !prev.find((x) => x.type === 'form') // check against latest prev state
         ) {
@@ -178,19 +170,12 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
           type: 'message:new',
           session_id: sessionId,
           client_id: clientId,
-          message: {
-            id: userMessage.id,
-            from: 'user',
-            content,
-            type: 'text',
-            timestamp: Date.now(),
-          },
+          message: newMessage,
         };
-
         socket.send(JSON.stringify(messagePayload));
       }
     },
-    [sessionId, clientId, socket, selectedSession]
+    [sessionId, clientId, socket, selectedSession, config.fields?.length]
   );
 
   const sendFile = useCallback(
@@ -358,14 +343,14 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
   }, [socket, clientId]);
 
   const updateProfile = useCallback(
-    (profile: Record<string, string>) => {
+    (data: Record<string, string>) => {
       if (socket && clientId) {
         const updateProfilePayload = {
-          type: 'profile:update',
+          type: 'session:update',
           client_id: clientId,
-          profile,
+          session_id: sessionId,
+          data: data,
         };
-
         socket.send(JSON.stringify(updateProfilePayload));
       }
 
@@ -373,12 +358,12 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
         prev
           ? {
               ...prev,
-              ...profile,
+              ...data,
             }
           : prev
       );
     },
-    [socket, clientId]
+    [socket, clientId, sessionId]
   );
 
   const retryMessage = useCallback(

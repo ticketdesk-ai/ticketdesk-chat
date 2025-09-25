@@ -8,7 +8,7 @@ interface MessageListProps {
   messages: Message[];
   onRetryMessage: (messageId: string) => void;
   onFormSubmit: (data: Record<string, string>) => void;
-  config: ChatBotConfig
+  config: ChatBotConfig;
 }
 
 export function MessageList({
@@ -36,17 +36,15 @@ export function MessageList({
               alt={message.file.name}
               className="max-w-xs rounded-lg mb-2"
             />
-            {message.content && <p>{message.content}</p>}
           </div>
         );
       } else if (isAudio) {
         return (
           <div>
-            <audio controls className="max-w-xs mb-2">
+            <audio controls className="max-w-xs mb-2 p-2 max-w-[200px]">
               <source src={message.file.url} type={message.file.type} />
               Your browser does not support the audio element.
             </audio>
-            {message.content && <p>{message.content}</p>}
           </div>
         );
       } else {
@@ -57,10 +55,10 @@ export function MessageList({
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:text-blue-700 underline"
+              download
             >
-              📎 {message.file.name}
+              {message.file.name}
             </a>
-            {message.content && <p className="mt-2">{message.content}</p>}
           </div>
         );
       }
@@ -84,12 +82,14 @@ export function MessageList({
             message.from === 'user' ? 'justify-end' : 'justify-start'
           }`}
         >
-          <div className="flex flex-col max-w-[80%] gap-1">
+          <div className="flex flex-col gap-1 overflow-hidden">
             <div
-              className={`p-4 rounded-2xl ${
-                message.from === 'user'
-                  ? 'bg-blue-500 text-white rounded-br-sm'
-                  : 'bg-gray-100 text-gray-800 rounded-bl-sm'
+              className={`rounded-2xl ${
+                message.type === 'text' || message.type === 'form'
+                  ? message.from === 'user'
+                    ? 'p-4 bg-blue-500 text-white rounded-br-sm'
+                    : 'p-4 bg-gray-100 text-gray-800 rounded-bl-sm'
+                  : ''
               }`}
             >
               {renderMessageContent(message)}

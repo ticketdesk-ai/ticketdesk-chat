@@ -8,6 +8,7 @@ import { useState } from 'react';
 import type { ChatBotConfig } from '../types/widget';
 
 interface ChatWindowProps {
+  chatbotId: string;
   isOpen: boolean;
   isMaximized: boolean;
   isConnected: boolean;
@@ -26,12 +27,12 @@ interface ChatWindowProps {
   }) => void;
   onClose: () => void;
   onToggleMaximize: () => void;
-  onSendMessage: (message: string) => void;
-  onFileUpload: (file: File) => void;
+  onSendMessage: (message: Message) => void;
   onRetryMessage: (messageId: string) => void;
 }
 
 export function ChatWindow({
+  chatbotId,
   isOpen,
   isMaximized,
   isConnected,
@@ -47,7 +48,6 @@ export function ChatWindow({
   onClose,
   onToggleMaximize,
   onSendMessage,
-  onFileUpload,
   onRetryMessage,
 }: ChatWindowProps) {
   const [currentView, setCurrentView] = useState<'chat' | 'recent-chats'>(
@@ -119,9 +119,10 @@ export function ChatWindow({
           )}
 
           <MessageInput
-            onSendMessage={onSendMessage}
-            onFileUpload={onFileUpload}
+            chatbotId={chatbotId}
             config={config}
+            selectedSession={selectedSession}
+            onSendMessage={onSendMessage}
           />
         </>
       )}

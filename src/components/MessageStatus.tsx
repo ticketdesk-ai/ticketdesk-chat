@@ -33,7 +33,7 @@ export function MessageStatus({
   };
 
   return (
-    <div className="flex items-center gap-1 text-xs text-gray-500">
+    <div className="flex items-center justify-end gap-1 text-xs text-gray-500">
       <span>{formatTime(timestamp)}</span>
       {status && getStatusIcon()}
       {status === 'failed' && onRetry && (
