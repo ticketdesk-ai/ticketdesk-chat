@@ -30,6 +30,8 @@ export function ChatWidget({ chatbotId }: { chatbotId: string }) {
     isConnected,
     isLoading,
     config,
+    operators,
+    lastActive,
   } = useChatHook({
     chatbotId,
   });
@@ -54,6 +56,8 @@ export function ChatWidget({ chatbotId }: { chatbotId: string }) {
         isMaximized={isMaximized}
         isConnected={isConnected}
         config={config}
+        operators={operators}
+        lastActive={lastActive}
         messages={messages}
         sessions={sessions}
         selectedSession={selectedSession}

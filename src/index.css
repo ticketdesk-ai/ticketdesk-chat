@@ -3,3 +3,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+  input {
+    @apply bg-white text-black;
+  }
+
+  input::placeholder {
+    @apply text-gray-400;
+  }
+
+  input:disabled {
+    @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+  }
+}

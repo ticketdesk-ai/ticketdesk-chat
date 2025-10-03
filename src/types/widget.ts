@@ -1,9 +1,10 @@
 export interface ChatBotConfig {
+  name: string;
   color?: string;
   shape?: 'square' | 'round';
   icon?: string;
   welcome_message?: string;
-  fields?: string[]
+  fields?: string[];
 }
 
 export interface Message {
@@ -39,4 +40,10 @@ export interface CustomerProfile {
   name?: string;
   email?: string;
   phone?: string;
+}
+
+export interface ChatOperator {
+  user_id: string;
+  name: string;
+  avatar?: string;
 }

@@ -1,4 +1,4 @@
-import type { Message, ChatSession } from '../types/widget';
+import type { Message, ChatSession, ChatOperator } from '../types/widget';
 import { Header } from './Header';
 import { MessageList } from './MessageList';
 import { MessageInput } from './MessageInput';
@@ -15,6 +15,8 @@ interface ChatWindowProps {
   config: ChatBotConfig;
   messages: Message[];
   sessions: ChatSession[];
+  operators: ChatOperator[];
+  lastActive?: number;
   selectedSession: ChatSession | null;
   onStartNewChat: () => void;
   onEndChat: () => void;
@@ -39,6 +41,8 @@ export function ChatWindow({
   config,
   messages,
   sessions,
+  operators,
+  lastActive,
   selectedSession,
   onStartNewChat,
   onEndChat,
@@ -96,6 +100,8 @@ export function ChatWindow({
         onToggleMaximize={onToggleMaximize}
         isMaximized={isMaximized}
         isConnected={isConnected}
+        operators={operators}
+        lastActive={lastActive}
         currentView={currentView}
         onBackToChat={handleBackToChat}
         onStartNewChat={onStartNewChat}

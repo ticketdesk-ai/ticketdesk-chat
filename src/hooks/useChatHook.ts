@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { usePartySocket } from 'partysocket/react';
-import type { Message, ChatSession } from '../types/widget';
+import type { Message, ChatSession, ChatOperator } from '../types/widget';
 import type { ChatBotConfig } from '../types/widget';
 
 // Helper functions for localStorage
@@ -27,6 +27,7 @@ const generateId = (): string => {
 
 export function useChatHook({ chatbotId }: { chatbotId: string }) {
   const [config, setConfig] = useState<ChatBotConfig>({
+    name: 'Chat with us',
     color: '#3b82f6',
     shape: 'round',
     welcome_message: 'Hi there!',
@@ -36,6 +37,8 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [clientId, setClientId] = useState<string | null>(null);
   const [sessions, setSessions] = useState<ChatSession[]>([]);
+  const [operators, setOperators] = useState<ChatOperator[]>([]);
+  const [lastActive, setLastActive] = useState<number | undefined>();
   const [selectedSession, setSelectedSession] = useState<ChatSession | null>(
     null
   );
@@ -76,7 +79,12 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
         }
         setMessages(data.messages || []);
         setSelectedSession(data.session);
-
+        if (data.operators) {
+          setOperators(data.operators);
+        }
+        if (data.last_active) {
+          setLastActive(data.last_active);
+        }
         // Connected with server
         setConfig({
           color: '#3b82f6',
@@ -84,11 +92,14 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
           welcome_message: 'Hi! How can I help you today?',
           ...data.config,
         });
+
         setIsLoading(false);
       } else if (type === 'session:list') {
         setSessions(data.sessions);
       } else if (type === 'message:recieved') {
         setMessages((prev) => [...prev, data.message]);
+      } else if (type === 'operator:list') {
+        if (data.operators) setOperators(data.operators);
       } else if (type === 'message:read') {
         // Update message status using message ID
         setMessages((prev) =>
@@ -443,6 +454,8 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
     sessions,
     selectedSession,
     isConnected: !!socket,
+    operators,
+    lastActive,
     isLoading,
     config,
     sessionId,

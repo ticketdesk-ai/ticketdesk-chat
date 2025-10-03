@@ -9,19 +9,22 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import { useState } from 'react';
-import type { ChatBotConfig } from '../types/widget';
+import type { ChatBotConfig, ChatOperator } from '../types/widget';
+import { formatDistanceToNow } from 'date-fns';
 
 interface HeaderProps {
   onClose: () => void;
   onToggleMaximize: () => void;
   isMaximized: boolean;
   isConnected: boolean;
-  currentView: 'chat' | 'recent-chats' | 'profile';
+  operators: ChatOperator[];
+  lastActive?: number;
+  currentView: 'chat' | 'recent-chats';
   onBackToChat: () => void;
   onStartNewChat: () => void;
   onEndChat: () => void;
   onViewRecentChats: () => void;
-  config: ChatBotConfig
+  config: ChatBotConfig;
 }
 
 export function Header({
@@ -29,6 +32,8 @@ export function Header({
   onToggleMaximize,
   isMaximized,
   isConnected,
+  operators,
+  lastActive,
   currentView,
   onBackToChat,
   onStartNewChat,
@@ -42,11 +47,23 @@ export function Header({
     switch (currentView) {
       case 'recent-chats':
         return 'Recent chats';
-      case 'profile':
-        return 'Update Profile';
       default:
-        return 'Chat with us';
+        return config.name;
     }
+  };
+
+  const renderConnectionStatus = () => {
+    if (operators.length > 0) {
+      return 'Online';
+    }
+    if (lastActive) {
+      // human readable last active
+      const lastActiveTime = formatDistanceToNow(lastActive, {
+        addSuffix: true,
+      });
+      return `Last active ${lastActiveTime}`;
+    }
+    return 'Offline';
   };
 
   const showBackButton = currentView !== 'chat';
@@ -74,11 +91,11 @@ export function Header({
                 <div className="flex items-center gap-2 mt-1">
                   <div
                     className={`w-2 h-2 rounded-full ${
-                      isConnected ? 'bg-green-400' : 'bg-red-400'
+                      operators.length > 0 ? 'bg-green-400' : 'bg-red-400'
                     }`}
                   />
                   <p className="text-sm opacity-90">
-                    {isConnected ? 'Online' : 'Connecting...'}
+                    {renderConnectionStatus()}
                   </p>
                 </div>
               )}
