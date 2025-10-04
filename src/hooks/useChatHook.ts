@@ -48,7 +48,7 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
       ? 'https://api.ticketdesk.ai'
       : 'http://localhost:8787',
     party: 'chatroom',
-    room: chatbotId,
+    room: 'main',
     onOpen() {
       // Get existing session data from localStorage
       const existingSessionId = getLocalStorage(`ti_${chatbotId}_session_id`);
@@ -59,6 +59,7 @@ export function useChatHook({ chatbotId }: { chatbotId: string }) {
         type: 'session:join',
         client_id: existingClientId,
         session_id: existingSessionId,
+        rooms: [chatbotId],
       };
 
       socket.send(JSON.stringify(joinPayload));

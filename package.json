@@ -1,9 +1,9 @@
 {
-  "name": "ticketdesk-widget",
-  "private": false,
-  "version": "1.0.0",
+  "name": "ticketdesk-chat",
+  "version": "0.1.3",
+  "description": "Ticketdesk chat for customer support powered by ChatGPT. Provide instant automated responses, AI-powered self-service, and assign to human chat support agents for better customer experience.",
+  "main": "dist/ticketdesk-chat.min.js",
   "type": "module",
-  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -13,20 +13,41 @@
     "build": "tsc && vite build",
     "build:widget": "tsc && vite build --config vite.widget.config.ts",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "npx playwright test"
   },
-  "dependencies": {
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ticketdesk-ai/ticketdesk-chat.git"
+  },
+  "keywords": [
+    "ticket",
+    "helpdesk",
+    "ai chatbot",
+    "customer support",
+    "helpdesk chatbot",
+    "chatgpt support bot",
+    "support automation",
+    "human chat support",
+    "customer service ai",
+    "ticketing chatbot",
+    "support widget",
+    "website chatbot",
+    "ai customer support"
+  ],
+  "author": "https://github.com/vickyRathee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ticketdesk-ai/ticketdesk-chat/issues"
+  },
+  "homepage": "https://ticketdesk.ai/",
+  "dependencies": {},
+  "devDependencies": {
     "date-fns": "^4.1.0",
     "lucide-react": "^0.344.0",
     "partysocket": "^1.1.5",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
-  },
-  "devDependencies": {
+    "react-dom": ">=16.8.0",
     "@eslint/js": "^9.9.1",
     "@r2wc/react-to-web-component": "^2.1.0",
     "@tailwindcss/vite": "^4.1.13",
@@ -34,6 +55,7 @@
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "@playwright/test": "^1.39.0",
     "autoprefixer": "^10.4.18",
     "eslint": "^9.9.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
