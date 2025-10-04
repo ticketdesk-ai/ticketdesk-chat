@@ -7971,12 +7971,13 @@ function $1({ chatbotId: e }) {
   ), f = E1({
     host: "https://api.ticketdesk.ai",
     party: "chatroom",
-    room: e,
+    room: "main",
     onOpen() {
       const j = Io(`ti_${e}_session_id`), F = {
         type: "session:join",
         client_id: Io(`ti_${e}_client_id`),
-        session_id: j
+        session_id: j,
+        rooms: [e]
       };
       f.send(JSON.stringify(F));
     },
