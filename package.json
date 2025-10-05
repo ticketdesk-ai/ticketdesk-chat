@@ -1,6 +1,6 @@
 {
   "name": "ticketdesk-chat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ticketdesk chat for live human customer support + AI chatbot using ChatGPT 5. Provide instant automated responses, AI-powered self-service, and assign to human chat support agents for better customer experience.",
   "main": "dist/ticketdesk-chat.min.js",
   "type": "module",

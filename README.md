@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/npm/l/ticketdesk-chat.svg)](https://www.npmjs.com/package/ticketdesk-chat)
 [![hits per month](https://data.jsdelivr.com/v1/package/npm/ticketdesk-chat/badge)](https://www.jsdelivr.com/package/npm/ticketdesk-chat)
 
-Ticketdesk chat widget to embed on any website for live customer support on chat + AI chatbot helpdesk, providing instant automated responses, smart self-service, and handoff to human agents when needed for a superior customer support experience.
+Ticketdesk chat widget to embed on any website for live customer support + AI chatbot helpdesk, providing instant automated responses, smart self-service, and handoff to human agents when needed for a superior customer support experience.
 
 ![Ticketdesk AI Chatbot](/assets/ticketdesk-ai-chatbot.png)
 
